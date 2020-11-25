@@ -72,13 +72,16 @@
                     <p>Para executar em localhost, será necessario configurar o acesso ao banco de dados no .env.</p>
                     <p>Para o envio de emails, basta configurar um email valido nas configurações de smtp do .env.</p>
                     <hr>
-                    <h4>Comandos para instalação em localhost</h4>
+                    <h4>Instuções para instalação em localhost</h4>
+                    <p>Renomeie o <strong>.env.example</strong> para <strong>.env</strong>.</p>
+                    <p>Após isso, execute os comandos listados abaixo.</p>
                     <ul class="list-group">
                         <li class="list-group-item">1 - composer install</li>
-                        <li class="list-group-item">2 - php artisan migrate</li>
-                        <li class="list-group-item">3 - php artisan db:seed</li>
-                        <li class="list-group-item">4 - php artisan storage:link</li>
-                        <li class="list-group-item">5 - php artisan serve</li>
+                        <li class="list-group-item">2 - php artisan key:generate</li>
+                        <li class="list-group-item">3 - php artisan migrate</li>
+                        <li class="list-group-item">4 - php artisan db:seed</li>
+                        <li class="list-group-item">5 - php artisan storage:link</li>
+                        <li class="list-group-item">6 - php artisan serve</li>
                     </ul>
                 </div>
                 <div class="modal-footer">
