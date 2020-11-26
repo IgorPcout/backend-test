@@ -50,7 +50,7 @@
         <p class="lead">Esse projeto foi desenvolvido para o teste de desenvolvedor BackEnd da Coderockr.</p>
         <hr class="my-4">
         <p>Abaixo estará descrito as rotas, seus parametros e retornos.</p>
-        <a class="btn btn-outline-dark float-left" href="#" role="button">Código no GitHub <i class="fab fa-github"></i> </a>
+        <a class="btn btn-outline-dark float-left" target="__blank" href="https://github.com/IgorPcout/backend-test/tree/development" role="button">Código no GitHub <i class="fab fa-github"></i> </a>
         <button class="btn btn-outline-info float-right" data-toggle="modal" data-target="#exampleModal" role="button">Informações Importantes <i class="fas fa-info-circle"></i> </button>
     </div>
 
@@ -401,7 +401,7 @@
                         <li class="list-group-item">status</li>
                         <hr>
                         <p class="text-center"><strong>Como usar: </strong> {{env('APP_URL')}}/api/event-member-list/{eventId}?status=1</p>
-                        <p class="text-center"><strong>Padrão: </strong> filterName=value (1 = open, 2 = closed, 3 = canceled)</p>
+                        <p class="text-center"><strong>Padrão: </strong> filterName=value (1 = pending, 2 = accepted, 3 = rejected)</p>
                     </ul>
                 </div>
             </div>
