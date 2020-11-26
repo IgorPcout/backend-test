@@ -30,7 +30,7 @@ class LoginController extends Controller
 
         $auth = Auth::attempt($request->all());
         if($auth){
-            $user = User::where('EMAIL', $request->email)->first();
+            $user = User::where('email', $request->email)->first();
             $signer = new Sha256();
             $time = time();
             $token = (new Builder())
