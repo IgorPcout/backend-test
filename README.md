@@ -26,7 +26,8 @@ Esse repositório pertence a solução do teste BackEnd proposto pela Coderockr.
 - 8.1 Caso o envio de emails seja necessário, basta preencher os campos do SMTP dentro do <strong>.env</strong>, a aplicação está pronta para efetuar os envios;
 
 ## Rotas
-<h4>Autenticação e Cadastro</h4>
+<h3>Autenticação e Cadastro</h3>
+
   - <strong>POST > </strong> /api/login
     - Valida as credenciais do usuário e retorna o token de acesso.
     - Campos.
@@ -44,7 +45,8 @@ Esse repositório pertence a solução do teste BackEnd proposto pela Coderockr.
         - city
         - state 
        
-<h4>Eventos</h4>
+<h3>Eventos</h3>
+
    - <strong>GET > </strong> /api/events
     - Lista todos os eventos cadastrados.
     - Filtros:
