@@ -1,67 +1,152 @@
-# Back End Test Project
-You should see this challenge as an opportunity to create an application following modern development best practices (given the stack of your choice), but also feel free to use your own architecture preferences (coding standards, code organization, third-party libraries, etc). It’s perfectly fine to use vanilla code or any framework or libraries.
+# Back End Test
+Esse repositório pertence a solução do teste BackEnd proposto pela Coderockr.
 
-## Scope
-In this challenge you should build an API for an application such as a social event network that implements the following features:
+## Tecnologias utilizadas
+1. PHP 7.2.5;
+2. Laravel 7.0;
+3. MySql 8;
+4. JWT Authentication/lcobucci;
 
-__NOTE:__ the implementation of an interface will not be evaluated.
+## Instruções para instalação
 
-### Public Area
-1. __A public event list:__ When accessing the main route, the application should show a list of all the events registered, paging them every 10 events;
-- 1.1 The user should be able to filter the list of events by dates, or regions;
-2. __Event details:__ the application must allow the user to see the details of the event, by clicking on the event listing, or accessing the event link;
-3. __User signup:__ the application should allow the user to register by informing: Name, Email, Password, Bio, Profile Picture, City, and State;
-4. __User login:__ The application should allow the user to login using their credentials;
-- 4.1 The login should persist when the application is closed, or reloaded;
+1. Copie o arquivo <strong>.env.exemple</strong> e o renomeie para <strong>.env</strong>;
+2. Configure dentro do <strong>.env</strong> o acesso ao banco de dados;
+- 2.1 DB_HOST= YOUR DATABASE HOST
+- 2.2 DB_PORT= THE DATABASE ACCESS PORT
+- 2.3 DB_DATABASE= YOUR EMPTY DATABASE
+- 2.4 DB_USERNAME= YOUR DATABASE ACCESS USERNAME
+- 2.5 DB_PASSWORD= YOUR DATABASE ACCESS PASSWORD
+3. Execute o comando <strong>composer install</strong> para instalar as dependências necessárias;
+4. Execute o comando <strong>php artisan generateJwt:key</strong> para gerar a chave de autenticação JWT;
+- 4.1 Após gerar a chave, verifique se o campo <strong>JWT_SECRET</strong> foi gerado corretamente no <strong>.env</strong>;
+5. Execute o comando <strong>php artisan migrate</strong> para gerar as tabelas e os relacionamentos no banco de dados selecionado no <strong>.env</strong>;
+6. Execute o comando <strong>php artisan db:seed</strong> para gerar alguns dados essenciais para as tabelas de <strong>status</strong> e <strong>event_status</strong>;
+7. Execute o comando <strong>php artisan storage:link</strong> para criar um link simbólico e permitir o armazenamento de imagens como a imagem de perfil, por exemplo;
+8. Por fim, execute o comando <strong>php artisan serve</strong> para executar a aplicação;
+- 8.1 Caso o envio de emails seja necessário, basta preencher os campos do SMTP dentro do <strong>.env</strong>, a aplicação está pronta para efetuar os envios;
 
-### Logged Area
-5. __Friend invitation:__ the application will allow the user to enter an email to add as a friend;
-6. __Add as friend:__ The informed user should receive a friend request, or an invitation to register, if they are not already a user;
-7. __Friendship management:__ the user will be able to see your new friend requests, list your friends, and undo friendships;
-8. __Event registration:__ the application should allow the user to register an event by informing: Name, Description, Date, Time, and Place;
-- 8.1 The user should be able to edit and cancel events their events;
-9. __Invite friends to event:__ the user can invite their friends to events, being able to invite all friends, or only the selected ones;
-- 9.1 If the user has already been invited to the event, regardless of their status (confirmed, rejected, awaiting confirmation), the invited user should not be notified of the invitation again;
-10. __My event list:__ the user should be able to see their events, being able to filter them by those who will participate, and the ones that he created;
-11. __Manage event invitations:__ The user can accept, or reject, attend events.
-12. __Events management:__ The user can view their rejected events and undo rejections, deciding to participate, if the event has not yet occurred;
+## Rotas
+<h4>Autenticação e Cadastro</h4>
+  - <strong>POST > </strong> /api/login
+    - Valida as credenciais do usuário e retorna o token de acesso.
+    - Campos.
+        - email
+        - password
+     
+  - <strong>POST > </strong> /api/register
+    - Efetua o cadastro de um novo usuário.
+    - Campos.
+        - name
+        - email
+        - password
+        - resume
+        - profile_picture
+        - city
+        - state 
+       
+<h4>Eventos</h4>
+  - <strong>GET > </strong> /api/events
+    - Lista todos os eventos cadastrados.
+    - Filtros:
+        - status
+            - Como usar: /api/events?dateStart=>=:2020-11-25&dateEnd=<=:2020-11-30&state==:MG
+            - Padrão: filterName=operation:value
+      
+  - <strong>GET > </strong> /api/event/{eventId}
+    - Retorna os detalhes de determinado evento.
+        
+  - <strong>(JWT) POST > </strong> /api/create-event
+    - Cadastra um novo evento.
+    - Campos.
+        - user_id
+        - event_name
+        - date (Ex: 2020-11-25 19:00:00)
+        - street
+        - number
+        - city
+        - state
+         
+  - <strong>(JWT) GET > </strong> /api/my-events/{userId}
+    - Lista os eventos de determinado usuário.
+    
+  - <strong>(JWT) PUT > </strong> /api/update-event/{userId}/{eventId}
+    - Atualiza os dados de um evento.
+    - Campos opcionais.
+        - event_name
+        - date (Ex: 2020-11-25 19:00:00)
+        - street
+        - number
+        - city
+        - state  
+        
+  - <strong>(JWT) POST > </strong> /api/cancel-event/{userId}/{eventId}
+    - Cancela determinado evento.  
+    
+  - <strong>(JWT) POST > </strong> /api/invite-for-event
+    - Convida amigos para participar do evento.
+    - Campos
+        - event_id
+        - friends (Opcional)
+            - O campo friends é opcional, caso ele não seja preenchido será enviado uma solicitação para todos os amigos, mas também é possivel enviar um determinado grupo de amigos (friends: [friend_id, friend_id, friend_id...]) e também é possivel enviar para apenas um amigo (friends: friend_id)           
+  
+  - <strong>(JWT) GET > </strong> /api/my-event-invites/{userId}
+    - Lista todos os convites de eventos de um usuário
+    - Filtros:
+        - status
+            - Como usar: /my-event-invites/{userId}?status=1
+            - Padrão: filterName=value (1 = pending, 2 = accepted, 3 = rejected)
+       
+  - <strong>(JWT) POST > </strong> /api/event-action
+    - Aceita ou rejeita participar de um evento caso o mesmo ainda esteja disponível 
+    - Campos:
+        - user_id
+        - invite_id
+        - action (2 = accepted, 3 = rejected)    
+        
+  - <strong>(JWT) GET > </strong> /api/event-member-list/{eventId}
+    - Retorna os membros de um determinado evento
+    - Filtros:
+        - status
+            - Como usar: /event-member-list/{eventId}?status=1
+            - Padrão: filterName=value (1 = pending, 2 = accepted, 3 = rejected)    
+            
+<h4>Amigos</h4>
 
-## Requirements
-1. Create project using any technology of your preference. It’s perfectly OK to use vanilla code or any framework or libraries;
-2. Although you can use as many dependencies as you want, you should manage them wisely;
-3. The API should be covered by unit tests;
-4. It is not necessary to send the notification emails, however, the code required for that would be welcome;
-5. The API must be documented in some way.
+  - <strong>(JWT) POST > </strong> /api/new-friend-request/{userId}
+    - Envia um pedido de amizade
+    - Campos:
+        - email
+            - Caso o email pertença a algum usuario ele receberá o convite, caso seja um novo usuario ele receberá um email com instuções para se cadastrar. 
 
-## Deliverables
-The project source code and dependencies should be made available in GitHub. Here are the steps you should follow:
-1. Fork this repository to your GitHub account (create an account if you don't have one, you will need it working with us).
-2. Create a "development" branch and commit the code to it. Do not push the code to the master branch.
-3. Include a README file that describes:
-  - Special build instructions, if any
-  - List of third-party libraries used and short description of why/how they were used
-4. Once the work is complete, create a pull request from "development" into "master" and send us the link.
-5. Avoid using huge commits hiding your progress. Feel free to work on a branch and use rebase to adjust your commits before submitting the final version.
+  - <strong>(JWT) GET > </strong> /api/get-friend-request/{userId}
+    - Lista os pedidos de amizade pendentes
+    
+  - <strong>(JWT) POST > </strong> /api/reject-friend-request/{userId}
+    - Rejeita um pedido de amizade
+    - Campos:
+        - friend_request_id
+        
+  - <strong>(JWT) POST > </strong> /api/accept-friend-request/{userId}
+    - Aceita um pedido de amizade
+    - Campos:
+        - friend_request_id    
+        
+  - <strong>(JWT) GET > </strong> /api/get-friend-list/{userId}
+    - Lista os amigos de um determinado usuário  
+    
+  - <strong>(JWT) POST > </strong> /api/remove-friend/{userId}
+    - Remove um amigo
+    - Campos:
+        - friend_id        
+        
+<h4>Perfil</h4>     
 
-## Coding Standards
-When working on the project be as clean and consistent as possible.
-
-## Project Deadline
-Ideally you'd finish the test project in 5 days. It shouldn't take you longer than a entire week.
-
-## Quality Assurance
-Use the following checklist to ensure high quality of the project.
-
-### General
-- First of all, the application should run without errors.
-- Are all requirements set above met?
-- Is coding style consistent?
-- The API is well documented?
-
-## Submission
-1. A link to the Github repository.
-2. Briefly describe how you decided on the tools that you used.
-
-## Have Fun Coding 🤘
-- This challenge description is intentionally vague in some aspects, but if you need assistance feel free to ask for help.
-- If any of the seens out of your current level, you may skip it, but remember to tell us about it in the pull request.
+  - <strong>(JWT) GET > </strong> /api/my-profile/{userId}
+    - Retorna os dados de cadastro de um usuário             
+            
+## Informações complementares
+- Na url base do projeto ('/') está a documentação escrita utilizando HTML, CSS e BootStrap 4 para facilitar o uso e testes da API.
+- A API foi hospedada na HEROKU para auxiliar nos testes <a href="https://coderockr-test.herokuapp.com/">Link da API na HEROKU</a>
+    - A hospedagem gratuita da HEROKU possui algumas limitações, caso ela seja utilizada para algum teste, considere os seguintes aspectos: 
+        - Não é possivel armazenar imagens gratuitamente na Heroku, logo as imagens de perfil não serão exibidas;
+        - O SMTP bloqueia automaticamente o envio de emails após algum tempo, por isso os emails não seram enviados;
