@@ -69,7 +69,9 @@ class EventInviteController extends Controller
                                     'event_city' => $event->city,
                                     'event_state' => $event->state
                                 ];
-                                $mail = Mail::to($user->email)->send(new \App\Mail\EventInvite($data));
+                                if(env('MAIL_USERNAME') != null && env('MAIL_USERNAME') != ''){
+                                    $mail = Mail::to($user->email)->send(new \App\Mail\EventInvite($data));
+                                }
                             }
                         }
                     }
@@ -101,8 +103,9 @@ class EventInviteController extends Controller
                                             'event_city' => $event->city,
                                             'event_state' => $event->state
                                         ];
-
-                                        $mail = Mail::to($user->email)->send(new \App\Mail\EventInvite($data));
+                                        if(env('MAIL_USERNAME') != null && env('MAIL_USERNAME') != ''){
+                                            $mail = Mail::to($user->email)->send(new \App\Mail\EventInvite($data));
+                                        }
                                     }
                                 }
                             }
@@ -130,7 +133,9 @@ class EventInviteController extends Controller
                                         'event_city' => $event->city,
                                         'event_state' => $event->state
                                     ];
-                                    $mail = Mail::to($user->email)->send(new \App\Mail\EventInvite($data));
+                                    if(env('MAIL_USERNAME') != null && env('MAIL_USERNAME') != ''){
+                                        $mail = Mail::to($user->email)->send(new \App\Mail\EventInvite($data));
+                                    }
                                 }
                             }else{
                                 return response()->json(['ERROR' => ['MESSAGE' => 'THIS USER IS ALREADY INVITED']], 400);

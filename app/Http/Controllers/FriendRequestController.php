@@ -48,7 +48,9 @@ class FriendRequestController extends Controller
                     'date' => date('Y-m-d')
                 ]);
 
-                $mail = Mail::to($request->email)->send(new \App\Mail\FriendRequest($user));
+                if(env('MAIL_USERNAME') != null && env('MAIL_USERNAME') != ''){
+                    $mail = Mail::to($request->email)->send(new \App\Mail\FriendRequest($user));
+                }
 
                 return response()->json(['SUCCESS' => ['MESSAGE' => 'YOUR FRIENDSHIP REQUEST WAS SENT TO '.$target->name]], 200);
             }else{
@@ -59,8 +61,10 @@ class FriendRequestController extends Controller
                     'new_member' => 1,
                     'date' => date('Y-m-d')
                 ]);
-
-                $mail = Mail::to($request->email)->send(new \App\Mail\NewUserFriendRequest($user));
+                
+                if(env('MAIL_USERNAME') != null && env('MAIL_USERNAME') != ''){
+                    $mail = Mail::to($request->email)->send(new \App\Mail\NewUserFriendRequest($user));
+                }
 
                 return response()->json(['SUCCESS' => ['MESSAGE' => 'YOUR FRIENDSHIP REQUEST WAS SENT TO '.$request->email]], 200);
             }
