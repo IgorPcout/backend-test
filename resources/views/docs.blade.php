@@ -77,11 +77,11 @@
                     <p>Após isso, execute os comandos listados abaixo.</p>
                     <ul class="list-group">
                         <li class="list-group-item"><storng>1 - </storng>composer install</li>
-                        <li class="list-group-item"><storng>1 - </storng>php artisan key:generate</li>
-                        <li class="list-group-item"><storng>1 - </storng>php artisan migrate</li>
-                        <li class="list-group-item"><storng>1 - </storng>php artisan db:seed</li>
-                        <li class="list-group-item"><storng>1 - </storng>php artisan storage:link</li>
-                        <li class="list-group-item"><storng>1 - </storng>php artisan serve</li>
+                        <li class="list-group-item"><storng>2 - </storng>php artisan generateJwt:key</li>
+                        <li class="list-group-item"><storng>3 - </storng>php artisan migrate</li>
+                        <li class="list-group-item"><storng>4 - </storng>php artisan db:seed</li>
+                        <li class="list-group-item"><storng>5 - </storng>php artisan storage:link</li>
+                        <li class="list-group-item"><storng>6 - </storng>php artisan serve</li>
                     </ul>
                 </div>
                 <div class="modal-footer">
