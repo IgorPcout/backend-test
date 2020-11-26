@@ -45,7 +45,7 @@ Esse repositório pertence a solução do teste BackEnd proposto pela Coderockr.
         - state 
        
 <h4>Eventos</h4>
-  - <strong>GET > </strong> /api/events
+   - <strong>GET > </strong> /api/events
     - Lista todos os eventos cadastrados.
     - Filtros:
         - status
