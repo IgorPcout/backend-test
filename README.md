@@ -24,6 +24,11 @@ Esse repositório pertence a solução do teste BackEnd proposto pela Coderockr.
 7. Execute o comando <strong>php artisan storage:link</strong> para criar um link simbólico e permitir o armazenamento de imagens como a imagem de perfil, por exemplo;
 8. Por fim, execute o comando <strong>php artisan serve</strong> para executar a aplicação;
 - 8.1 Caso o envio de emails seja necessário, basta preencher os campos do SMTP dentro do <strong>.env</strong>, a aplicação está pronta para efetuar os envios;
+- 8.2 Caso as configurações feitas no <strong>.env</strong> não forem interpretadas, execute o comando <strong>php artisan config:clear</strong>.
+
+## Autenticação JWT
+Essa aplicação utiliza token JWT para segurança das rotas, o token é retornado após o login com credenciais existentes no banco de dados.
+Para utilizar o token nas rotas protegidas, basta enviar um header <strong>Authorization Bearer {token_jwt}</strong>.
 
 ## Rotas
 <h3>Autenticação e Cadastro</h3>
