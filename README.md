@@ -53,7 +53,7 @@ Para utilizar o token nas rotas protegidas, basta enviar um header <strong>Autho
 <h3>Eventos</h3>
 
    - <strong>GET > </strong> /api/events
-    - Lista todos os eventos cadastrados.
+     - Lista todos os eventos cadastrados.
         - Filtros:
             - status
             - dateStart
