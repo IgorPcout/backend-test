@@ -54,10 +54,12 @@ Para utilizar o token nas rotas protegidas, basta enviar um header <strong>Autho
 
    - <strong>GET > </strong> /api/events
     - Lista todos os eventos cadastrados.
-    - Filtros:
-        - status
-            - Como usar: /api/events?dateStart=>=:2020-11-25&dateEnd=<=:2020-11-30&state==:MG
-            - Padrão: filterName=operation:value
+        - Filtros:
+            - status
+            - dateStart
+            - dateEnd
+                - Como usar: /api/events?dateStart=>=:2020-11-25&dateEnd=<=:2020-11-30&state==:MG
+                - Padrão: filterName=operation:value
       
   - <strong>GET > </strong> /api/event/{eventId}
     - Retorna os detalhes de determinado evento.
